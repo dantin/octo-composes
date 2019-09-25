@@ -4,5 +4,4 @@ dependencies {
     compile("org.slf4j:slf4j-api:${rootProject.SLF4J_API_VERSION}")
 
     testCompile("junit:junit:${rootProject.JUNIT_VERSION}")
-    testCompile("ch.qos.logback:logback-classic:${rootProject.LOGBACK_CLASSIC_VERSION}")
 }
