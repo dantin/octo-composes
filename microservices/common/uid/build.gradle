@@ -1,0 +1,7 @@
+dependencies {
+    compile("joda-time:joda-time:${rootProject.JODA_TIME_VERSION}")
+
+    compile project(":common:base")
+
+    testCompile("junit:junit:${rootProject.JUNIT_VERSION}")
+}
