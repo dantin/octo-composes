@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${rootProject.SPRING_BOOT_VERSION}")
+        classpath("io.spring.gradle:dependency-management-plugin:${rootProject.SPRING_BOOT_DEPENDENCY_MANAGEMENT_PLUGIN_VERSION}")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.SPRING_CLOUD_VERSION}"
+    }
+}
+
+bootJar {
+    mainClassName = 'com.github.dantin.webster.support.configuration.ConfigServerApplication'
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.cloud:spring-cloud-config-server")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+}
