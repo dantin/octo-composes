@@ -1,4 +1,4 @@
-package com.github.dantin.webster.support.discovery;
+package com.github.dantin.webster.support.registry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations = "classpath:application.properties")
 @SpringBootTest(classes = TestOnlyApplication.class, webEnvironment = WebEnvironment.MOCK)
-public class EurekaApplicationTests {
+public class RegistryServerApplicationTests {
 
   @Test
   public void contextLoads() {}
