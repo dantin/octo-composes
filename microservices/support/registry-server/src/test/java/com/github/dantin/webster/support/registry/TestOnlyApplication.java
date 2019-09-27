@@ -1,4 +1,4 @@
-package com.github.dantin.webster.support.discovery;
+package com.github.dantin.webster.support.registry;
 
 import org.springframework.boot.SpringApplication;
 
