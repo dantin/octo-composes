@@ -1,0 +1,18 @@
+# The entry-point for spring to know where to look for the configuration file
+
+spring:
+  application:
+    name: discovery-server
+  cloud:
+    config:
+      uri: http://localhost:8888 # the uri of the config-server
+      fail-fast: true # the service will not run if it can't reach the config-server
+      username: user
+      password: try1now
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: false # tell the built-in eureka client to not register itself with eureka, as we should act as a server
+    fetch-registry: false
