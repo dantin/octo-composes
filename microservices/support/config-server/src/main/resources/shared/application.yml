@@ -1,0 +1,12 @@
+# common configuration that is shared among all files
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/ # where the registry server is located
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://auth-server/uaa/users/current # the uri used to find the user

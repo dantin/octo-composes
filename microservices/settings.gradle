@@ -1,2 +1,3 @@
 include 'common:base'
 include 'common:uid'
+include 'support:config-server'

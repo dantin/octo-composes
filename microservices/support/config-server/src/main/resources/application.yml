@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared # where to locate the config files
+  profiles:
+    active: native # native uses a git repo by default
+  security:
+    user:
+      password: try1now
+
+server:
+  port: 8888
