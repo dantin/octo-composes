@@ -1,0 +1,24 @@
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+zuul:
+  ignored-services: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    auth-server:
+      path: /uaa/**  # path that will be intercepted
+      url: auth-server # the url that the request will be mapped to
+      strip-prefix: false # if zuul should replace the "/uaa/" segment
+      sensitive-headers:
+
+    account-service:
+      path: /accounts/**
+      service-id: account-service
+      strip-prefix: false
+      sensitive-headers:
+
+server:
+  port: 8765
