@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/user_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-    username: user_db_account
+    url: jdbc:postgresql://localhost:5432/oauth_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: oauth_db_user
     password: password
     driver-class-name: org.postgresql.Driver
     druid:
