@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${rootProject.SPRING_BOOT_VERSION}")
+        classpath("io.spring.gradle:dependency-management-plugin:${rootProject.SPRING_BOOT_DEPENDENCY_MANAGEMENT_PLUGIN_VERSION}")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${rootProject.SPRING_CLOUD_VERSION}"
+    }
+}
+
+group = "${rootProject.group}.core"
+archivesBaseName = 'auth-server'
+version = "${rootProject.version}"
+
+bootJar {
+    mainClassName = 'com.github.dantin.webster.support.oauth.AuthServerApplication'
+}
+
+dependencies {
+    compile project(':common::base')
+
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-validation")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    compile("org.springframework.cloud:spring-cloud-starter-config")
+    compile("org.springframework.cloud:spring-cloud-starter-oauth2")
+    compile("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+    compile("com.alibaba:druid-spring-boot-starter:${rootProject.DRUID_SPRING_BOOT_STARTER_VERSION}")
+    compile("com.github.pagehelper:pagehelper-spring-boot-starter:${rootProject.PAGEHELPER_SPRING_BOOT_STARTER_VERSION}")
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:${rootProject.MYBATIS_SPRING_BOOT_STARTER_VERSION}")
+    runtime("org.postgresql:postgresql:${rootProject.POSTGRESQL_DRIVER_VERSION}")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+}

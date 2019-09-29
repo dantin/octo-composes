@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: user_db_account
+    password: password
+    driver-class-name: org.postgresql.Driver
+    druid:
+      initial-size: 8
+      max-active: 8
+      min-idle: 2
+      max-wait: 12000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 5
+      validation-query: SELECT 1
+      validation-query-timeout: 5
+      test-on-borrow: true
+      test-on-return: true
+      test-while-idle: true
+      time-between-eviction-runs-millis: 10000
+      min-evictable-idle-time-millis: 30001
+      async-close-connection-enable: true
+      transaction-query-timeout: 6000
+      remove-abandoned-timeout: 1800
+      filter:
+        stat:
+          db-type: postgresql
+          log-slow-sql: true
+          slow-sql-millis: 5000
+
+server:
+  servlet:
+    context-path: /uaa
+  port: 8081
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/**.xml
+  type-aliases-package: com.ge.apm.microservices.core.templaterule.server.repository
+  type-handlers-package: com.ge.apm.microservices.core.templaterule.server.entity.handler
+
+pagehelper:
+  helper-dialect: postgresql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+    level:
+      com.ge.apm.microservices.core.templaterule.server.repository: debug
