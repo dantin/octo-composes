@@ -2,9 +2,11 @@ package com.github.dantin.webster.support.oauth.repository;
 
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthAccessToken;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Mapper
 public interface OAuthAccessTokenRepository {
 
   OAuthAccessToken findByTokenId(String tokenId);

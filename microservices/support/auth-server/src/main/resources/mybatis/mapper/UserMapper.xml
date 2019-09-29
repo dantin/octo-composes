@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.dantin.webster.support.oauth.repository.UserRepository">
+    <sql id="BASE_TABLE">
+        "t_user"
+    </sql>
+
+    <sql id="BASE_COLUMNS">
+        "id", "root_id", "name", "asset_id", "hospital_id", "description", "status", "create_at", "create_by", "update_at", "update_by"
+    </sql>
+</mapper>

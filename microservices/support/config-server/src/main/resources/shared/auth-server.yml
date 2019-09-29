@@ -38,12 +38,6 @@ mybatis:
   type-aliases-package: com.github.dantin.webster.support.oauth.repository
   type-handlers-package: com.github.dantin.webster.support.oauth.entity.dto.handler
 
-pagehelper:
-  helper-dialect: postgresql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
-
 logging:
     level:
       ROOT: debug

@@ -39,10 +39,10 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 
     compile("com.alibaba:druid-spring-boot-starter:${rootProject.DRUID_SPRING_BOOT_STARTER_VERSION}")
-    compile("com.github.pagehelper:pagehelper-spring-boot-starter:${rootProject.PAGEHELPER_SPRING_BOOT_STARTER_VERSION}")
     compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:${rootProject.MYBATIS_SPRING_BOOT_STARTER_VERSION}")
     runtime("org.postgresql:postgresql:${rootProject.POSTGRESQL_DRIVER_VERSION}")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
+    testRuntime("com.h2database:h2:1.4.199")
 }
