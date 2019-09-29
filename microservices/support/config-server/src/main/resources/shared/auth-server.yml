@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/oauth_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
-    username: oauth_db_user
+    username: oauth_backend
     password: password
     driver-class-name: org.postgresql.Driver
     druid:
@@ -35,8 +35,8 @@ server:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/**.xml
-  type-aliases-package: com.ge.apm.microservices.core.templaterule.server.repository
-  type-handlers-package: com.ge.apm.microservices.core.templaterule.server.entity.handler
+  type-aliases-package: com.github.dantin.webster.support.oauth.repository
+  type-handlers-package: com.github.dantin.webster.support.oauth.entity.dto.handler
 
 pagehelper:
   helper-dialect: postgresql
@@ -46,4 +46,4 @@ pagehelper:
 
 logging:
     level:
-      com.ge.apm.microservices.core.templaterule.server.repository: debug
+      ROOT: debug
