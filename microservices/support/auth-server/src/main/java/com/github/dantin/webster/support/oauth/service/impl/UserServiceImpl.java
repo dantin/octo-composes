@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
   public User create(User user) {
     throwIfUsernameExists(user.getUsername());
 
+    LOGGER.info("create user {}", user.getUsername());
     String hash = passwordEncoder.encode(user.getPassword());
     user.setPassword(hash);
     user.setActivated(Boolean.TRUE); // TODO: send sms or email with code for activation

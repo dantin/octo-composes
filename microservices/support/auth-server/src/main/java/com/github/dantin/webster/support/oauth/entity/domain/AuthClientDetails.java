@@ -10,8 +10,6 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 
 public class AuthClientDetails implements ClientDetails {
 
-  private String id;
-
   private String clientId;
 
   private String clientSecret;
@@ -93,10 +91,6 @@ public class AuthClientDetails implements ClientDetails {
   @Override
   public Map<String, Object> getAdditionalInformation() {
     return null;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public void setClientId(String clientId) {

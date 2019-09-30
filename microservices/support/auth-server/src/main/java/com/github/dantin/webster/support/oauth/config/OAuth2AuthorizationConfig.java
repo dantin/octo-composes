@@ -1,8 +1,10 @@
 package com.github.dantin.webster.support.oauth.config;
 
+import com.github.dantin.webster.support.oauth.service.OAuthTokenService;
 import com.github.dantin.webster.support.oauth.service.impl.AuthClientDetailsService;
 import com.github.dantin.webster.support.oauth.service.impl.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,16 +25,20 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
   private final AuthClientDetailsService authClientDetailsService;
 
+  private final OAuthTokenService authTokenService;
+
   private final PasswordEncoder encoder;
 
   public OAuth2AuthorizationConfig(
       @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
       CustomUserDetailsService userDetailsService,
       AuthClientDetailsService authClientDetailsService,
+      OAuthTokenService authTokenService,
       PasswordEncoder encoder) {
     this.authenticationManager = authenticationManager;
     this.userDetailsService = userDetailsService;
     this.authClientDetailsService = authClientDetailsService;
+    this.authTokenService = authTokenService;
     this.encoder = encoder;
   }
 
@@ -41,9 +47,9 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     clients.withClientDetails(authClientDetailsService);
   }
 
+  @Bean
   public TokenStore tokenStore() {
-    // TODO: implement
-    return null;
+    return new OAuthTokenStore(authTokenService);
   }
 
   @Override
