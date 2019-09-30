@@ -27,12 +27,12 @@ public class OAuthAccessTokenMapperTest {
 
   @Autowired OAuthAccessTokenMapper repository;
 
-  private static final String expectedTokenId = "test-token-01";
-  private static final String expectedClientId = "test-client-01";
-  private static final String expectedAuthenticationId = "test-authentication-01";
-  private static final String expectedUsername = "username";
-  private static final String expectedTokenValue = "test-token";
-  private static final String expectedRefreshTokenValue = "test-refresh-token";
+  private final String expectedTokenId = "test-token-01";
+  private final String expectedClientId = "test-client-01";
+  private final String expectedAuthenticationId = "test-authentication-01";
+  private final String expectedUsername = "username";
+  private final String expectedTokenValue = "test-token";
+  private final String expectedRefreshTokenValue = "test-refresh-token";
 
   private OAuthAccessToken accessToken;
 

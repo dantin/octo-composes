@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.dantin.webster.support.oauth.repository.OAuthRefreshTokenMapper">
+    <sql id="BASE_TABLE">
+        "t_oauth_refresh_token"
+    </sql>
+
+    <sql id="BASE_COLUMNS">
+        "token_id", "token", "authentication"
+    </sql>
+
+    <resultMap id="refreshTokenMap" type="com.github.dantin.webster.support.oauth.entity.domain.OAuthRefreshToken">
+        <result property="tokenId" column="token_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="token" column="token" javaType="org.springframework.security.oauth2.common.OAuth2RefreshToken"
+                typeHandler="com.github.dantin.webster.support.oauth.repository.handlers.OAuth2RefreshTokenTypeHandler"/>
+        <result property="authentication" column="authentication"
+                typeHandler="com.github.dantin.webster.support.oauth.repository.handlers.OAuth2AuthenticationTypeHandler"/>
+    </resultMap>
+
+    <select id="findOneByTokenId" resultMap="refreshTokenMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "token_id" = #{tokenId}
+        LIMIT 1
+    </select>
+
+    <delete id="deleteByTokenId">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "token_id" = #{tokenId}
+    </delete>
+
+    <insert id="save" parameterType="com.github.dantin.webster.support.oauth.entity.domain.OAuthRefreshToken">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            "token_id",
+            "token",
+            "authentication",
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            #{tokenId},
+            #{token,typeHandler=com.github.dantin.webster.support.oauth.repository.handlers.OAuth2RefreshTokenTypeHandler},
+            #{authentication,typeHandler=com.github.dantin.webster.support.oauth.repository.handlers.OAuth2AuthenticationTypeHandler},
+        </trim>
+    </insert>
+</mapper>
