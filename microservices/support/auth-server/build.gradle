@@ -44,5 +44,5 @@ dependencies {
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.security:spring-security-test")
-    testRuntime("com.h2database:h2:1.4.199")
+    // testRuntime("com.h2database:h2:1.4.199")
 }

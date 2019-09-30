@@ -23,9 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(
     classes = TestOnlyApplication.class,
     webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class OAuthAccessTokenRepositoryTest {
+public class OAuthAccessTokenMapperTest {
 
-  @Autowired OAuthAccessTokenRepository repository;
+  @Autowired OAuthAccessTokenMapper repository;
 
   private static final String expectedTokenId = "test-token-01";
   private static final String expectedClientId = "test-client-01";
