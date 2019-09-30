@@ -33,7 +33,6 @@ public class OAuthAccessTokenRepositoryTest {
   private static final String expectedTokenValue = "test-token";
   private static final String expectedRefreshTokenValue = "test-refresh-token";
 
-  private OAuth2Authentication authentication;
   private OAuthAccessToken accessToken;
 
   @Before
@@ -41,9 +40,9 @@ public class OAuthAccessTokenRepositoryTest {
     OAuth2Request request =
         new OAuth2Request(
             Collections.emptyMap(), expectedClientId, null, false, null, null, null, null, null);
-    authentication = new OAuth2Authentication(request, null);
+    OAuth2Authentication authentication = new OAuth2Authentication(request, null);
     accessToken =
-        OAuthAccessToken.builder(expectedClientId)
+        OAuthAccessToken.builder(expectedTokenId)
             .refreshToken(expectedRefreshTokenValue)
             .authentication(authentication)
             .clientId(expectedClientId)
@@ -61,7 +60,7 @@ public class OAuthAccessTokenRepositoryTest {
     repository.save(accessToken);
 
     found = repository.findByTokenId(expectedTokenId);
-    assertFalse("save failed", Objects.isNull(found));
+    assertFalse("create failed", Objects.isNull(found));
     assertEquals("find by token id failed", expectedTokenId, found.getTokenId());
     assertEquals("find by token id failed", expectedClientId, found.getClientId());
 
