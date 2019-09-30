@@ -35,23 +35,23 @@ public class OAuthTokenServiceImpl implements OAuthTokenService {
 
   @Override
   public Optional<OAuthAccessToken> findAccessToken(String tokenId) {
-    return Optional.ofNullable(accessTokenRepository.findByTokenId(tokenId));
+    return Optional.ofNullable(accessTokenRepository.findOneByTokenId(tokenId));
   }
 
   @Override
   public Optional<OAuthAccessToken> findAccessTokenByAuthenticationId(String authenticationId) {
-    return Optional.ofNullable(accessTokenRepository.findByAuthenticationId(authenticationId));
+    return Optional.ofNullable(accessTokenRepository.findOneByAuthenticationId(authenticationId));
   }
 
   @Override
   public List<OAuthAccessToken> findAccessTokenByClientId(String clientId) {
-    return accessTokenRepository.findByClientId(clientId);
+    return accessTokenRepository.findAllByClientId(clientId);
   }
 
   @Override
   public List<OAuthAccessToken> findAccessTokenByClientIdAndUsername(
       String clientId, String username) {
-    return accessTokenRepository.findByClientIdAndUsername(clientId, username);
+    return accessTokenRepository.findAllByClientIdAndUsername(clientId, username);
   }
 
   @Override
@@ -65,8 +65,8 @@ public class OAuthTokenServiceImpl implements OAuthTokenService {
   }
 
   @Override
-  public void removeAccessTokenByRefreshTokenId(String refreshTokenId) {
-    accessTokenRepository.deleteByRefreshTokenId(refreshTokenId);
+  public void removeAccessTokenByRefreshToken(String refreshToken) {
+    accessTokenRepository.deleteByRefreshToken(refreshToken);
   }
 
   @Override

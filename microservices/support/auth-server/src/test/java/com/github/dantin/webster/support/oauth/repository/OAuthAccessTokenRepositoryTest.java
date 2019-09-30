@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import com.github.dantin.webster.support.oauth.TestOnlyApplication;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthAccessToken;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,22 +54,58 @@ public class OAuthAccessTokenRepositoryTest {
   }
 
   @Test
-  public void basicOperation() {
-    OAuthAccessToken found = repository.findByTokenId(expectedTokenId);
+  public void testBasicOperation() {
+    OAuthAccessToken found = repository.findOneByTokenId(expectedTokenId);
     assertTrue("target access token already exists", Objects.isNull(found));
 
     repository.save(accessToken);
 
-    found = repository.findByTokenId(expectedTokenId);
+    found = repository.findOneByTokenId(expectedTokenId);
     assertFalse("create failed", Objects.isNull(found));
+
     assertEquals("find by token id failed", expectedTokenId, found.getTokenId());
     assertEquals("find by token id failed", expectedClientId, found.getClientId());
 
-    found = repository.findByAuthenticationId(expectedAuthenticationId);
+    repository.deleteByTokenId(expectedTokenId);
+    found = repository.findOneByTokenId(expectedTokenId);
+    assertTrue("delete by token id failed", Objects.isNull(found));
+  }
+
+  @Test
+  public void testDeleteByRefreshToken() {
+    OAuthAccessToken found = repository.findOneByTokenId(expectedTokenId);
+    assertTrue("target access token already exists", Objects.isNull(found));
+    repository.save(accessToken);
+    found = repository.findOneByTokenId(expectedTokenId);
+    assertFalse("create failed", Objects.isNull(found));
+
+    repository.deleteByRefreshToken(expectedRefreshTokenValue);
+    found = repository.findOneByTokenId(expectedTokenId);
+    assertTrue("delete by refresh token failed", Objects.isNull(found));
+  }
+
+  @Test
+  public void testFindOperations() {
+    OAuthAccessToken found = repository.findOneByTokenId(expectedTokenId);
+    assertTrue("target access token already exists", Objects.isNull(found));
+    repository.save(accessToken);
+    found = repository.findOneByTokenId(expectedTokenId);
+    assertFalse("create failed", Objects.isNull(found));
+
+    // find by authentication id.
+    found = repository.findOneByAuthenticationId(expectedAuthenticationId);
     assertFalse("find by authentication id failed", Objects.isNull(found));
 
+    // find by client id.
+    List<OAuthAccessToken> tokens = repository.findAllByClientId(expectedClientId);
+    assertEquals(1, tokens.size());
+
+    // find by client id and username.
+    tokens = repository.findAllByClientIdAndUsername(expectedClientId, expectedUsername);
+    assertEquals(1, tokens.size());
+    tokens = repository.findAllByClientIdAndUsername(expectedClientId, "x");
+    assertEquals(0, tokens.size());
+
     repository.deleteByTokenId(expectedTokenId);
-    found = repository.findByTokenId(expectedTokenId);
-    assertTrue("delete by token id failed", Objects.isNull(found));
   }
 }

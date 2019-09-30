@@ -109,7 +109,7 @@ public class OAuthTokenStore implements TokenStore {
   @Override
   public void removeAccessTokenUsingRefreshToken(OAuth2RefreshToken refreshToken) {
     String refreshTokenId = authTokenService.extractTokenKey(refreshToken.getValue());
-    authTokenService.removeAccessTokenByRefreshTokenId(refreshTokenId);
+    authTokenService.removeAccessTokenByRefreshToken(refreshTokenId);
   }
 
   @Override

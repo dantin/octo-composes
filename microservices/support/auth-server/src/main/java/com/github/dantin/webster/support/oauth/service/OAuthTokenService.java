@@ -21,7 +21,7 @@ public interface OAuthTokenService {
 
   void removeAccessToken(String tokenId);
 
-  void removeAccessTokenByRefreshTokenId(String refreshTokenId);
+  void removeAccessTokenByRefreshToken(String refreshToken);
 
   Optional<OAuthRefreshToken> findRefreshToken(String tokenId);
 
