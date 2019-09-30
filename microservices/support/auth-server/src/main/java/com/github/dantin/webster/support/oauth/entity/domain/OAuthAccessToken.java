@@ -1,6 +1,5 @@
 package com.github.dantin.webster.support.oauth.entity.domain;
 
-import com.github.dantin.webster.support.oauth.util.SerializableObjectConverter;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
@@ -18,7 +17,7 @@ public class OAuthAccessToken {
   /* client id */
   private String clientId;
   /* serialized binary data */
-  private String authentication;
+  private OAuth2Authentication authentication;
   /* encrypted refresh_token */
   private String refreshToken;
 
@@ -75,11 +74,11 @@ public class OAuthAccessToken {
   }
 
   public OAuth2Authentication getAuthentication() {
-    return SerializableObjectConverter.deserialize(authentication);
+    return authentication;
   }
 
   public void setAuthentication(OAuth2Authentication authentication) {
-    this.authentication = SerializableObjectConverter.serialize(authentication);
+    this.authentication = authentication;
   }
 
   public String getRefreshToken() {
@@ -101,7 +100,7 @@ public class OAuthAccessToken {
     private String authenticationId;
     private String username;
     private String clientId;
-    private String authentication;
+    private OAuth2Authentication authentication;
     private String refreshToken;
 
     private Builder(String tokenId) {
@@ -128,7 +127,7 @@ public class OAuthAccessToken {
       return this;
     }
 
-    public Builder authentication(String authentication) {
+    public Builder authentication(OAuth2Authentication authentication) {
       this.authentication = authentication;
       return this;
     }

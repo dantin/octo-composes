@@ -3,7 +3,6 @@ package com.github.dantin.webster.support.oauth.config;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthAccessToken;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthRefreshToken;
 import com.github.dantin.webster.support.oauth.service.OAuthTokenService;
-import com.github.dantin.webster.support.oauth.util.SerializableObjectConverter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -57,7 +56,7 @@ public class OAuthTokenStore implements TokenStore {
             .authenticationId(authenticationKeyGenerator.extractKey(authentication))
             .username(authentication.isClientOnly() ? null : authentication.getName())
             .clientId(authentication.getOAuth2Request().getClientId())
-            .authentication(SerializableObjectConverter.serialize(authentication))
+            .authentication(authentication)
             .refreshToken(authTokenService.extractTokenKey(refreshToken))
             .build();
     authTokenService.saveAccessToken(token);
