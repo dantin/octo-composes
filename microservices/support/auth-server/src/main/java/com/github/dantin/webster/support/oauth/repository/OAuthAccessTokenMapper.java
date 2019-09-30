@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface OAuthAccessTokenRepository {
+public interface OAuthAccessTokenMapper {
 
   OAuthAccessToken findOneByTokenId(String tokenId);
 
