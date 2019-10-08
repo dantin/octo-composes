@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface OAuthRefreshTokenRepository {
+public interface OAuthRefreshTokenMapper {
 
-  OAuthRefreshToken findByTokenId(String tokenId);
+  OAuthRefreshToken findOneByTokenId(String tokenId);
 
   void save(OAuthRefreshToken refreshToken);
 

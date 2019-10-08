@@ -1,6 +1,8 @@
 package com.github.dantin.webster.support.oauth.service.impl;
 
-import com.github.dantin.webster.support.oauth.repository.AuthClientRepository;
+import com.github.dantin.webster.support.oauth.entity.domain.OAuthClientDetails;
+import com.github.dantin.webster.support.oauth.entity.dto.AuthClient;
+import com.github.dantin.webster.support.oauth.repository.OAuthClientMapper;
 import java.util.Optional;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -10,16 +12,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthClientDetailsService implements ClientDetailsService {
 
-  private final AuthClientRepository authClientRepository;
+  private final OAuthClientMapper OAuthClientMapper;
 
-  public AuthClientDetailsService(AuthClientRepository authClientRepository) {
-    this.authClientRepository = authClientRepository;
+  public AuthClientDetailsService(OAuthClientMapper OAuthClientMapper) {
+    this.OAuthClientMapper = OAuthClientMapper;
   }
 
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
-    Optional<ClientDetails> existClientDetails =
-        Optional.ofNullable(authClientRepository.findByClientId(clientId));
-    return existClientDetails.orElseThrow(IllegalAccessError::new);
+    Optional<OAuthClientDetails> existClientDetails =
+        Optional.ofNullable(OAuthClientMapper.findOneByClientId(clientId));
+    if (!existClientDetails.isPresent()) {
+      throw new IllegalStateException("no client detail found");
+    }
+    return AuthClient.builder(existClientDetails.get()).build();
   }
 }

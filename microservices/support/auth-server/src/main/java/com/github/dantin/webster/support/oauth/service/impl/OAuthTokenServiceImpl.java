@@ -3,7 +3,7 @@ package com.github.dantin.webster.support.oauth.service.impl;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthAccessToken;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthRefreshToken;
 import com.github.dantin.webster.support.oauth.repository.OAuthAccessTokenMapper;
-import com.github.dantin.webster.support.oauth.repository.OAuthRefreshTokenRepository;
+import com.github.dantin.webster.support.oauth.repository.OAuthRefreshTokenMapper;
 import com.github.dantin.webster.support.oauth.service.OAuthTokenService;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -23,11 +23,10 @@ public class OAuthTokenServiceImpl implements OAuthTokenService {
   private static final Logger LOGGER = LoggerFactory.getLogger(OAuthTokenServiceImpl.class);
 
   private final OAuthAccessTokenMapper accessTokenMapper;
-  private final OAuthRefreshTokenRepository refreshTokenRepository;
+  private final OAuthRefreshTokenMapper refreshTokenRepository;
 
   public OAuthTokenServiceImpl(
-      OAuthAccessTokenMapper accessTokenMapper,
-      OAuthRefreshTokenRepository refreshTokenRepository) {
+      OAuthAccessTokenMapper accessTokenMapper, OAuthRefreshTokenMapper refreshTokenRepository) {
     // auto wire repository.
     this.accessTokenMapper = accessTokenMapper;
     this.refreshTokenRepository = refreshTokenRepository;
@@ -71,7 +70,7 @@ public class OAuthTokenServiceImpl implements OAuthTokenService {
 
   @Override
   public Optional<OAuthRefreshToken> findRefreshToken(String tokenId) {
-    return Optional.ofNullable(refreshTokenRepository.findByTokenId(tokenId));
+    return Optional.ofNullable(refreshTokenRepository.findOneByTokenId(tokenId));
   }
 
   @Override
