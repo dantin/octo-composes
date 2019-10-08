@@ -2,28 +2,19 @@ package com.github.dantin.webster.support.oauth.repository;
 
 import static org.junit.Assert.*;
 
-import com.github.dantin.webster.support.oauth.TestOnlyApplication;
+import com.github.dantin.webster.support.oauth.BaseSpringBootTest;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthAccessToken;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@TestPropertySource(locations = "classpath:application.properties")
-@SpringBootTest(
-    classes = TestOnlyApplication.class,
-    webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class OAuthAccessTokenMapperTest {
+public class OAuthAccessTokenMapperTest extends BaseSpringBootTest {
 
   @Autowired OAuthAccessTokenMapper repository;
 

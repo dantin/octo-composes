@@ -14,6 +14,7 @@
         <result property="token" column="token" javaType="org.springframework.security.oauth2.common.OAuth2RefreshToken"
                 typeHandler="com.github.dantin.webster.support.oauth.repository.handlers.OAuth2RefreshTokenTypeHandler"/>
         <result property="authentication" column="authentication"
+                javaType="org.springframework.security.oauth2.provider.OAuth2Authentication"
                 typeHandler="com.github.dantin.webster.support.oauth.repository.handlers.OAuth2AuthenticationTypeHandler"/>
     </resultMap>
 

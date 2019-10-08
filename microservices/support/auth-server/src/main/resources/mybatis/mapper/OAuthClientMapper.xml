@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.dantin.webster.support.oauth.repository.OAuthClientMapper">
+    <sql id="BASE_TABLE">
+        "t_oauth_client_details"
+    </sql>
+
+    <sql id="BASE_COLUMNS">
+        "client_id", "resource_ids", "client_secret", "scope", "authorized_grant_types",
+        "web_server_redirect_uri", "access_token_validity", "refresh_token_validity", "additional_information", "autoapprove"
+    </sql>
+
+    <resultMap id="clientDetailsMap" type="com.github.dantin.webster.support.oauth.entity.domain.OAuthClientDetails">
+        <result property="clientId" column="client_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="resourceIds" column="resource_ids" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="clientSecret" column="client_secret" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="scope" column="scope" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="authorizedGrantTypes" column="authorized_grant_types" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="webServerRedirectUri" column="web_server_redirect_uri" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="accessTokenValidity" column="access_token_validity" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="refreshTokenValidity" column="refresh_token_validity" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="additionalInformation" column="additional_information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="autoApprove" column="autoapprove" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findOneByClientId" resultMap="clientDetailsMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "client_id" = #{clientId}
+        LIMIT 1
+    </select>
+
+    <delete id="deleteByClientId">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "client_id" = #{clientId}
+    </delete>
+
+    <insert id="save" parameterType="com.github.dantin.webster.support.oauth.entity.domain.OAuthClientDetails">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            client_id,
+            resource_ids,
+            client_secret,
+            scope,
+            authorized_grant_types,
+            web_server_redirect_uri,
+            access_token_validity,
+            refresh_token_validity,
+            additional_information,
+            autoapprove,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            #{clientId},
+            #{resourceIds},
+            #{clientSecret},
+            #{scope},
+            #{authorizedGrantTypes},
+            #{webServerRedirectUri},
+            #{accessTokenValidity},
+            #{refreshTokenValidity},
+            #{additionalInformation},
+            #{autoApprove},
+        </trim>
+    </insert>
+</mapper>
