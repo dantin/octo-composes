@@ -44,6 +44,14 @@ public class RoleMapperTest extends BaseSpringBootTest {
     assertEquals(1, roles.size());
     assertEquals(expectedName, roles.get(0).getName());
 
+    roles = repository.findAllByIds(CollectionsHelper.listOf());
+    assertEquals(1, roles.size());
+    roles = repository.findAllByIds(CollectionsHelper.listOf("not-exist"));
+    assertEquals(0, roles.size());
+    roles = repository.findAllByIds(CollectionsHelper.listOf(expectedId));
+    assertEquals(1, roles.size());
+    assertEquals(expectedName, roles.get(0).getName());
+
     repository.deleteById(expectedId);
     found = repository.findOneByName(expectedName);
     assertNull("delete by id failed", found);

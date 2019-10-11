@@ -40,6 +40,22 @@
 
     </select>
 
+    <select id="findAllByIds" resultMap="roleMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        1 = 1
+        <if test="ids != null and ids.size() > 0">
+            AND "id" IN
+            <foreach collection="ids" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+
     <insert id="save" parameterType="com.github.dantin.webster.support.oauth.entity.domain.Role">
         INSERT INTO
         <include refid="BASE_TABLE"/>

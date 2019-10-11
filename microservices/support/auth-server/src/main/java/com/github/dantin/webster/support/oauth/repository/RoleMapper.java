@@ -16,5 +16,7 @@ public interface RoleMapper {
 
   List<Role> findAllByNames(@Param("names") List<String> names);
 
+  List<Role> findAllByIds(@Param("ids") List<String> ids);
+
   void deleteById(String id);
 }
