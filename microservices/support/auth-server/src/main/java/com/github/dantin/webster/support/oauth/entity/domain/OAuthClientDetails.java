@@ -164,8 +164,10 @@ public class OAuthClientDetails {
       return this;
     }
 
-    public Builder authorizedGrantTypes(String authorizedGrantTypes) {
-      this.authorizedGrantTypes = Strings.nullToEmpty(authorizedGrantTypes);
+    public Builder authorizedGrantTypes(String... authorizedGrantTypes) {
+      if (!Objects.isNull(authorizedGrantTypes)) {
+        this.authorizedGrantTypes = COMMA_JOINER.join(authorizedGrantTypes);
+      }
       return this;
     }
 

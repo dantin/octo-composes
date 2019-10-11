@@ -1,8 +1,9 @@
 package com.github.dantin.webster.support.oauth.service.impl;
 
 import com.github.dantin.webster.support.oauth.entity.domain.User;
-import com.github.dantin.webster.support.oauth.repository.UserRepository;
-import java.util.Objects;
+import com.github.dantin.webster.support.oauth.entity.dto.AuthUser;
+import com.github.dantin.webster.support.oauth.repository.UserMapper;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,19 +16,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
-  private final UserRepository userRepository;
+  private final UserMapper userMapper;
 
-  public CustomUserDetailsService(UserRepository userRepository) {
-    this.userRepository = userRepository;
+  public CustomUserDetailsService(UserMapper userMapper) {
+    this.userMapper = userMapper;
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     LOGGER.info("find user by username {}", username);
-    User user = userRepository.findByUsername(username);
-    if (Objects.isNull(user)) {
+    Optional<User> existsUser = Optional.ofNullable(userMapper.findByUsername(username));
+    if (!existsUser.isPresent()) {
       throw new UsernameNotFoundException("username " + username + " not found");
     }
-    return user;
+    return AuthUser.builder(existsUser.get()).build();
   }
 }

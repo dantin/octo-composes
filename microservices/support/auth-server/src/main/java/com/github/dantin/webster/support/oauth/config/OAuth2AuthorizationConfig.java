@@ -1,5 +1,6 @@
 package com.github.dantin.webster.support.oauth.config;
 
+import com.github.dantin.webster.support.oauth.entity.store.OAuthTokenStore;
 import com.github.dantin.webster.support.oauth.service.OAuthTokenService;
 import com.github.dantin.webster.support.oauth.service.impl.AuthClientDetailsService;
 import com.github.dantin.webster.support.oauth.service.impl.CustomUserDetailsService;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.AuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
@@ -29,17 +31,21 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
   private final PasswordEncoder encoder;
 
+  private final AuthenticationKeyGenerator authenticationKeyGenerator;
+
   public OAuth2AuthorizationConfig(
       @Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
       CustomUserDetailsService userDetailsService,
       AuthClientDetailsService authClientDetailsService,
       OAuthTokenService authTokenService,
-      PasswordEncoder encoder) {
+      PasswordEncoder encoder,
+      AuthenticationKeyGenerator authenticationKeyGenerator) {
     this.authenticationManager = authenticationManager;
     this.userDetailsService = userDetailsService;
     this.authClientDetailsService = authClientDetailsService;
     this.authTokenService = authTokenService;
     this.encoder = encoder;
+    this.authenticationKeyGenerator = authenticationKeyGenerator;
   }
 
   @Override
@@ -49,7 +55,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
   @Bean
   public TokenStore tokenStore() {
-    return new OAuthTokenStore(authTokenService);
+    return new OAuthTokenStore(authTokenService, authenticationKeyGenerator);
   }
 
   @Override
