@@ -8,4 +8,56 @@
     <sql id="BASE_COLUMNS">
         "id", "name"
     </sql>
+
+    <resultMap id="roleMap" type="com.github.dantin.webster.support.oauth.entity.domain.Role">
+        <result property="id" column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findOneByName" resultMap="roleMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "name" = #{name}
+        LIMIT 1
+    </select>
+
+    <select id="findAllByNames" resultMap="roleMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        1 = 1
+        <if test="names != null and names.size() > 0">
+            AND "name" IN
+            <foreach collection="names" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+
+    <insert id="save" parameterType="com.github.dantin.webster.support.oauth.entity.domain.Role">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            "id",
+            "name",
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            #{id},
+            #{name},
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "id" = #{id}
+    </delete>
 </mapper>
