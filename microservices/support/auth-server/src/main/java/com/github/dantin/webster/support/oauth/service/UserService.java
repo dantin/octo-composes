@@ -4,5 +4,5 @@ import com.github.dantin.webster.support.oauth.entity.domain.User;
 
 public interface UserService {
 
-  User create(User user);
+  void create(User user);
 }

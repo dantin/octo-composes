@@ -1,9 +1,7 @@
 package com.github.dantin.webster.support.oauth.service.impl;
 
-import com.github.dantin.webster.common.base.CollectionsHelper;
 import com.github.dantin.webster.support.oauth.entity.domain.User;
-import com.github.dantin.webster.support.oauth.entity.enums.Authorities;
-import com.github.dantin.webster.support.oauth.repository.UserRepository;
+import com.github.dantin.webster.support.oauth.repository.UserMapper;
 import com.github.dantin.webster.support.oauth.service.UserService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -17,32 +15,31 @@ public class UserServiceImpl implements UserService {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
   private final PasswordEncoder passwordEncoder;
-  private final UserRepository userRepository;
+  private final UserMapper userMapper;
 
-  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserMapper userMapper) {
     this.passwordEncoder = passwordEncoder;
-    this.userRepository = userRepository;
+    this.userMapper = userMapper;
   }
 
   @Override
-  public User create(User user) {
+  public void create(User user) {
     throwIfUsernameExists(user.getUsername());
 
     LOGGER.info("create user {}", user.getUsername());
     String hash = passwordEncoder.encode(user.getPassword());
+    user.setUsername(user.getUsername());
     user.setPassword(hash);
-    user.setActivated(Boolean.TRUE); // TODO: send sms or email with code for activation
-    user.setAuthorities(CollectionsHelper.setOf(Authorities.ROLE_USER));
+    // user.setActivated(Boolean.TRUE); // TODO: send sms or email with code for activation
+    // user.setAuthorities(CollectionsHelper.setOf(Authorities.ROLE_USER));
 
     // TODO: other routines on account creation
 
-    userRepository.save(user);
-
-    return user;
+    userMapper.save(user);
   }
 
   private void throwIfUsernameExists(String username) {
-    Optional<User> existingUser = Optional.ofNullable(userRepository.findByUsername(username));
+    Optional<User> existingUser = Optional.ofNullable(userMapper.findByUsername(username));
     existingUser.ifPresent(
         (user) -> {
           throw new IllegalArgumentException("user already exists");
