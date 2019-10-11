@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
   }
 
   private void throwIfUsernameExists(String username) {
-    Optional<User> existingUser = Optional.ofNullable(userMapper.findByUsername(username));
+    Optional<User> existingUser = Optional.ofNullable(userMapper.findOneByUsername(username));
     existingUser.ifPresent(
         (user) -> {
           throw new IllegalArgumentException("user already exists");

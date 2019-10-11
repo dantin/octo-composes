@@ -11,13 +11,17 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserMapper {
 
-  User findByUsername(String username);
+  User findOneByUsername(String username);
 
   void save(User user);
 
-  void addUserRole(String userId, UserRole role);
+  void grantRole(UserRole userRole);
 
-  void removeUserRole(String userId, Role role);
+  void revokeRole(User user, Role role);
+
+  void revokeAllRoleById(String id);
 
   List<UserRole> findAllUserRoleById(String id);
+
+  void deleteById(String id);
 }

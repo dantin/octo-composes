@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import com.github.dantin.webster.common.base.CollectionsHelper;
 import com.github.dantin.webster.support.oauth.BaseSpringBootTest;
 import com.github.dantin.webster.support.oauth.entity.domain.Role;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,34 +25,25 @@ public class RoleMapperTest extends BaseSpringBootTest {
 
   @Test
   public void testBasicOperation() {
-    Role found = repository.findOneByName(expectedName);
-    assertNull("target role already exist", found);
+    assertNull("target role already exists", repository.findOneByName(expectedName));
 
     repository.save(role);
 
-    found = repository.findOneByName(expectedName);
+    Role found = repository.findOneByName(expectedName);
     assertNotNull("create failed", found);
 
-    assertEquals("find by name failed", expectedId, found.getId());
+    assertEquals("wrong value", expectedId, found.getId());
+    assertEquals("wrong value", expectedName, found.getName());
 
-    List<Role> roles = repository.findAllByNames(CollectionsHelper.listOf());
-    assertEquals(1, roles.size());
-    roles = repository.findAllByNames(CollectionsHelper.listOf("not-exist"));
-    assertEquals(0, roles.size());
-    roles = repository.findAllByNames(CollectionsHelper.listOf(expectedName));
-    assertEquals(1, roles.size());
-    assertEquals(expectedName, roles.get(0).getName());
+    assertEquals(1, repository.findAllByNames(CollectionsHelper.listOf()).size());
+    assertEquals(0, repository.findAllByNames(CollectionsHelper.listOf("not-exist")).size());
+    assertEquals(1, repository.findAllByNames(CollectionsHelper.listOf(expectedName)).size());
 
-    roles = repository.findAllByIds(CollectionsHelper.listOf());
-    assertEquals(1, roles.size());
-    roles = repository.findAllByIds(CollectionsHelper.listOf("not-exist"));
-    assertEquals(0, roles.size());
-    roles = repository.findAllByIds(CollectionsHelper.listOf(expectedId));
-    assertEquals(1, roles.size());
-    assertEquals(expectedName, roles.get(0).getName());
+    assertEquals(1, repository.findAllByIds(CollectionsHelper.listOf()).size());
+    assertEquals(0, repository.findAllByIds(CollectionsHelper.listOf("not-exist")).size());
+    assertEquals(1, repository.findAllByIds(CollectionsHelper.listOf(expectedId)).size());
 
     repository.deleteById(expectedId);
-    found = repository.findOneByName(expectedName);
-    assertNull("delete by id failed", found);
+    assertNull("delete by id failed", repository.findOneByName(expectedName));
   }
 }

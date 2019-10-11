@@ -8,4 +8,73 @@
     <sql id="BASE_COLUMNS">
         "id", "username", "password", "create_at", "update_at"
     </sql>
+
+    <resultMap id="userMap" type="com.github.dantin.webster.support.oauth.entity.domain.User">
+        <id property="id" column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="username" column="username" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="updateAt" column="update_at" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="USER_ROLE_TABLE">
+        "t_user_role"
+    </sql>
+
+    <sql id="USER_ROLE_COLUMNS">
+        "id", "user_id", "role_id"
+    </sql>
+
+    <insert id="grantRole" parameterType="com.github.dantin.webster.support.oauth.entity.domain.UserRole">
+        INSERT INTO
+        <include refid="USER_ROLE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            "id",
+            "user_id",
+            "role_id",
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            #{id},
+            #{userId},
+            #{roleId},
+        </trim>
+    </insert>
+
+    <select id="findOneByUsername" resultMap="userMap">
+        SELECT
+        <include refid="BASE_COLUMNS"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "username" = #{username}
+        LIMIT 1
+    </select>
+
+    <insert id="save" parameterType="com.github.dantin.webster.support.oauth.entity.domain.User">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            "id",
+            "username",
+            "password",
+            "create_at",
+            "update_at",
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=", ">
+            #{id},
+            #{username},
+            #{password},
+            #{createAt},
+            #{updateAt},
+        </trim>
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        "id" = #{id}
+    </delete>
 </mapper>

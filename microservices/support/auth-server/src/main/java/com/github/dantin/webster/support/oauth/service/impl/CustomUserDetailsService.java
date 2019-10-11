@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     LOGGER.info("find user by username {}", username);
-    Optional<User> existsUser = Optional.ofNullable(userMapper.findByUsername(username));
+    Optional<User> existsUser = Optional.ofNullable(userMapper.findOneByUsername(username));
     if (!existsUser.isPresent()) {
       throw new UsernameNotFoundException("username " + username + " not found");
     }

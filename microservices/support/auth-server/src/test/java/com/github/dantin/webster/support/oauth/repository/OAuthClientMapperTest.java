@@ -46,19 +46,15 @@ public class OAuthClientMapperTest extends BaseSpringBootTest {
 
   @Test
   public void testBaseOperation() {
-    OAuthClientDetails found = repository.findOneByClientId(expectedClientId);
-    assertNull("target auth client already exists", found);
-
+    assertNull("target auth client already exists", repository.findOneByClientId(expectedClientId));
     repository.save(clientDetails);
 
-    found = repository.findOneByClientId(expectedClientId);
+    OAuthClientDetails found = repository.findOneByClientId(expectedClientId);
     assertNotNull("create failed", found);
-
-    assertEquals("find by client id failed", expectedClientId, found.getClientId());
+    assertEquals("wrong value", expectedClientId, found.getClientId());
 
     repository.deleteByClientId(expectedClientId);
-    found = repository.findOneByClientId(expectedClientId);
-    assertNull("delete by client id failed", found);
+    assertNull("delete by client id failed", repository.findOneByClientId(expectedClientId));
   }
 
   @Ignore

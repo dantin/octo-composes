@@ -1,9 +1,7 @@
 package com.github.dantin.webster.support.oauth;
 
 import com.github.dantin.webster.support.oauth.config.OAuthConfigTest;
-import com.github.dantin.webster.support.oauth.repository.OAuthAccessTokenMapperTest;
-import com.github.dantin.webster.support.oauth.repository.OAuthClientMapperTest;
-import com.github.dantin.webster.support.oauth.repository.OAuthRefreshTokenMapperTest;
+import com.github.dantin.webster.support.oauth.repository.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -12,6 +10,8 @@ import org.junit.runners.Suite;
   OAuthConfigTest.class,
   OAuthAccessTokenMapperTest.class,
   OAuthRefreshTokenMapperTest.class,
-  OAuthClientMapperTest.class
+  OAuthClientMapperTest.class,
+  RoleMapperTest.class,
+  UserMapperTest.class,
 })
 public class RepositoryTestSuite {}

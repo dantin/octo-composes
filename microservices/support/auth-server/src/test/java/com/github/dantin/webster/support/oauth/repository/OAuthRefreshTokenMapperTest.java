@@ -37,18 +37,15 @@ public class OAuthRefreshTokenMapperTest extends BaseSpringBootTest {
 
   @Test
   public void testBaseOperation() {
-    OAuthRefreshToken found = repository.findOneByTokenId(expectedTokenId);
-    assertNull("target access token already exists", found);
-
+    assertNull("target access token already exists", repository.findOneByTokenId(expectedTokenId));
     repository.save(refreshToken);
 
-    found = repository.findOneByTokenId(expectedTokenId);
+    OAuthRefreshToken found = repository.findOneByTokenId(expectedTokenId);
     assertNotNull("create failed", found);
 
-    assertEquals("find by token id failed", expectedTokenId, found.getTokenId());
+    assertEquals("wrong value", expectedTokenId, found.getTokenId());
 
     repository.deleteByTokenId(expectedTokenId);
-    found = repository.findOneByTokenId(expectedTokenId);
-    assertNull("delete by token id failed", found);
+    assertNull("delete by token id failed", repository.findOneByTokenId(expectedTokenId));
   }
 }
