@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import com.github.dantin.webster.support.oauth.BaseSpringBootTest;
 import com.github.dantin.webster.support.oauth.entity.domain.OAuthRefreshToken;
 import java.util.Collections;
-import java.util.Objects;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +38,17 @@ public class OAuthRefreshTokenMapperTest extends BaseSpringBootTest {
   @Test
   public void testBaseOperation() {
     OAuthRefreshToken found = repository.findOneByTokenId(expectedTokenId);
-    assertTrue("target access token already exists", Objects.isNull(found));
+    assertNull("target access token already exists", found);
 
     repository.save(refreshToken);
 
     found = repository.findOneByTokenId(expectedTokenId);
-    assertFalse("create failed", Objects.isNull(found));
+    assertNotNull("create failed", found);
 
     assertEquals("find by token id failed", expectedTokenId, found.getTokenId());
 
     repository.deleteByTokenId(expectedTokenId);
     found = repository.findOneByTokenId(expectedTokenId);
-    assertTrue("delete by token id failed", Objects.isNull(found));
+    assertNull("delete by token id failed", found);
   }
 }

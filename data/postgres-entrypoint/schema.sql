@@ -69,7 +69,7 @@ ALTER TABLE t_oauth_approvals OWNER TO oauth_backend;
 
 -- t_user
 CREATE TABLE IF NOT EXISTS t_user (
-    id                      VARCHAR(256),
+    id                      VARCHAR(256) PRIMARY KEY,
     username                VARCHAR(256),
     password                VARCHAR(256),
     create_at               TIMESTAMP,
@@ -79,13 +79,14 @@ ALTER TABLE t_user OWNER TO oauth_backend;
 
 -- t_role
 CREATE TABLE IF NOT EXISTS t_role (
-    id                      VARCHAR(256),
+    id                      VARCHAR(256) PRIMARY KEY,
     name                    VARCHAR(256)
 );
 ALTER TABLE t_role OWNER TO oauth_backend;
 
 -- t_user_role
 CREATE TABLE IF NOT EXISTS t_user_role (
+    id                      VARCHAR(256) PRIMARY KEY,
     user_id                 VARCHAR(256),
     role_id                 VARCHAR(256)
 );

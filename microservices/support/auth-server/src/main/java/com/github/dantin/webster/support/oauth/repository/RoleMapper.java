@@ -3,6 +3,7 @@ package com.github.dantin.webster.support.oauth.repository;
 import com.github.dantin.webster.support.oauth.entity.domain.Role;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,11 +12,11 @@ public interface RoleMapper {
 
   void save(Role role);
 
-  Role findByName(String name);
+  Role findOneByName(String name);
 
-  List<Role> findAll();
+  List<Role> findAllByNames(@Param("names") List<String> names);
 
-  List<Role> findAllByName(List<String> names);
+  List<Role> findAllByIds(@Param("ids") List<String> ids);
 
   void deleteById(String id);
 }

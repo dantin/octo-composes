@@ -47,19 +47,19 @@ public class OAuthAccessTokenMapperTest extends BaseSpringBootTest {
   @Test
   public void testBasicOperation() {
     OAuthAccessToken found = repository.findOneByTokenId(expectedTokenId);
-    assertTrue("target access token already exists", Objects.isNull(found));
+    assertNull("target access token already exists", found);
 
     repository.save(accessToken);
 
     found = repository.findOneByTokenId(expectedTokenId);
-    assertFalse("create failed", Objects.isNull(found));
+    assertNotNull("create failed", found);
 
     assertEquals("find by token id failed", expectedTokenId, found.getTokenId());
     assertEquals("find by token id failed", expectedClientId, found.getClientId());
 
     repository.deleteByTokenId(expectedTokenId);
     found = repository.findOneByTokenId(expectedTokenId);
-    assertTrue("delete by token id failed", Objects.isNull(found));
+    assertNull("delete by token id failed", found);
   }
 
   @Test
